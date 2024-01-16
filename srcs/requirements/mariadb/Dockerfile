@@ -1,16 +1,19 @@
 FROM debian:buster
 
+# EXPOSE 3306
+
 RUN apt update -y
-RUN apt upgrade -y
 RUN apt-get install mariadb-server -y
 
-COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+RUN mkdir /var/run/mysqld
+RUN chmod 777 -R /var/run/mysqld
+RUN chmod 777 -R /var/lib/mysql
+RUN chmod 777 -R /var/log/mysql
+RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./conf/config.sh /
 
-RUN service mysql start
-# RUN mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
-# RUN mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-# RUN mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-# RUN mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-# RUN mysql -e "FLUSH PRIVILEGES;"
-# RUN mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
-# RUN exec mysqld_safe
+RUN chmod 755 /config.sh
+RUN chmod 755 /etc/mysql/mariadb.conf.d/50-server.cnf
+
+CMD ["/config.sh"]
