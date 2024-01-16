@@ -7,14 +7,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/user/docker/data/wordpress
+      device: /docker/wordpress
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
       type: none 
       o: bind
-      device: /home/user/docker/data/mariadb
+      device: /docker/mariadb
 
 networks:
   inception:
