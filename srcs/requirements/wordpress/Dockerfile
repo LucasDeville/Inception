@@ -1,16 +1,28 @@
 FROM debian:buster
 
+EXPOSE 9000
+
 RUN apt update -y
-RUN apt upgrade -y
+RUN apt-get install -y
 RUN apt-get install wget -y
 RUN apt-get install -y php7.3 php-fpm php-mysql mariadb-client curl
 
-COPY ./conf/config.sh /
-COPY ./conf/wp-config.php /
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
-RUN chmod 755 /config.sh
-RUN chmod 755 /wp-config.php
+ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
-EXPOSE 9000
+RUN cd /var/www && tar -xvf latest.tar.gz && \
+	rm -rf latest.tar.gz
 
-CMD [ "/config.sh" ]
+RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent
+
+RUN chmod +x ./usr/bin/wp
+
+RUN mkdir /run/php
+
+COPY ./conf/config.sh /var/www/wordpress/config.sh
+RUN chmod +x /var/www/wordpress/config.sh
+
+CMD ["bash", "/var/www/wordpress/config.sh"]
+
+# sudo docker exec -it wordpress /bin/bash

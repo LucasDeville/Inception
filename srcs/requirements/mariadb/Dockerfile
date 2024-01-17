@@ -2,10 +2,10 @@ FROM debian:buster
 
 EXPOSE 3306
 
-ARG DB_NAME=${SQL_DATABASE}
-ARG DB_USER=${SQL_USER}
-ARG DB_PASSWORD=${SQL_PASSWORD}
-ARG DB_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+ARG SQL_DATABASE=${SQL_DATABASE}
+ARG SQL_USER=${SQL_USER}
+ARG SQL_PASSWORD=${SQL_PASSWORD}
+ARG SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
 
 RUN apt-get update && apt-get install \
 	mariadb-server -y && \
@@ -13,11 +13,16 @@ RUN apt-get update && apt-get install \
 
 RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-
 COPY ./conf/config.sh /
 
 RUN chmod 755 /config.sh
 RUN chmod 755 /etc/mysql/mariadb.conf.d/50-server.cnf
-RUN bash ./config.sh
 
-CMD ["mysqld_safe"]
+CMD ["./config.sh"]
+
+
+# sudo docker exec -it mariadb /bin/bash
+# mysql
+# SHOW DATABASES;
+# USE wordpress;
+# SHOW TABLES

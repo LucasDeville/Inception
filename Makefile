@@ -1,11 +1,11 @@
 all : build
 
 build : 
-	@sudo hostsed add 127.0.0.1 ldeville.42.fr && echo "Added ldeville.42.fr to /etc/hosts"
-	sudo docker compose -f ./srcs/docker-compose.yml up -d
+	@sudo hostsed add 127.0.0.1 ldeville.42.fr && echo "\033[1;32m~|ADD ldeville.42.fr to /etc/hosts|~\033[0m"
+	@docker-compose -f ./srcs/docker-compose.yml up -d
 
 down : 
-	@sudo hostsed rm 127.0.0.1 ldeville.42.fr && echo "Removed ldeville.42.fr to /etc/hosts"
+	@sudo hostsed rm 127.0.0.1 ldeville.42.fr && echo "\033[1;31m~|DELETE ldeville.42.fr to /etc/hosts|~\033[0m"
 	@docker-compose -f ./srcs/docker-compose.yml down
 
 stop : 
@@ -18,14 +18,14 @@ status :
 	@docker ps
 
 delete : down
-	@docker image rm srcs_wordpress -f
-	@docker image rm srcs_mariadb -f
-	@docker image rm srcs_nginx -f
+	@docker image rm wordpress -f
+	@docker image rm mariadb -f
+	@docker image rm nginx -f
 	@docker volume rm mariadb
-	@docker volume rm wordpress
+	@docker volume rm wordpress && echo "\033[1;33m~| Nettoyage des images/containers/volumes de Docker : OK |~\033[0m"\
+	
 
 prune :
-	@docker system prune -af
-	@docker volume rm mariadb
-	@docker volume rm wordpress
-
+	@sudo rm -rf /home/user/docker/_data/wordpress/*
+	@sudo rm -rf /home/user/docker/_data/mariadb/*
+	@docker system prune -af && echo "\033[1;33m~| Nettoyage du cache de Docker : OK |~\033[0m"\
