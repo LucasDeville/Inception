@@ -21,6 +21,5 @@ wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASSWORD --allow
 
 cd -
 
-
 # run php-fpm7.3 listening for CGI request
 php-fpm7.3 -F

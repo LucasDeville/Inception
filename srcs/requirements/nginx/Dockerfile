@@ -1,5 +1,7 @@
 FROM debian:buster
 
+EXPOSE	443
+
 RUN apt update
 RUN apt install nginx -y
 RUN apt install vim -y
@@ -16,7 +18,5 @@ COPY ./conf/nginx.conf /etc/nginx/sites-available/default
 
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
-
-EXPOSE	443
 
 CMD [ "nginx", "-g", "daemon off;" ]
