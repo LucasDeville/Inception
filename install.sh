@@ -2,7 +2,7 @@
 
 if [ -d "/home/user/data" ]; then \
 	echo "/data directory already exists"; else \
-	mkdir /home/user/docker; \
+	mkdir /home/user/data; \
 fi
 
 if [ -d "/home/user/data/wordpress" ]; then \
