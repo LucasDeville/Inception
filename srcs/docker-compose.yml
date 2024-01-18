@@ -61,11 +61,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/user/docker/_data/wordpress
+      device: /home/user/data/wordpress
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
       type: none 
       o: bind
-      device: /home/user/docker/_data/mariadb
+      device: /home/user/data/mariadb

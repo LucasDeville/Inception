@@ -1,23 +1,18 @@
 #!/bin/bash
 
-if [ -d "/home/user/docker" ]; then \
-	echo "/docker directory already exists"; else \
+if [ -d "/home/user/data" ]; then \
+	echo "/data directory already exists"; else \
 	mkdir /home/user/docker; \
 fi
 
-if [ -d "/home/user/docker/_data" ]; then \
-	echo "/_data directory already exists"; else \
-	mkdir /home/user/docker/_data; \
+if [ -d "/home/user/data/wordpress" ]; then \
+	echo "/data/wordpress already exists"; else \
+	mkdir /home/user/data/wordpress; \
 fi
 
-if [ -d "/home/user/docker/_data/wordpress" ]; then \
-	echo "/docker/_data/wordpress already exists"; else \
-	mkdir /home/user/docker/_data/wordpress; \
-fi
-
-if [ -d "/home/user/docker/_data/mariadb" ]; then \
-	echo "/docker/_data/mariadb already exists"; else \
-	mkdir /home/user/docker/_data/mariadb; \
+if [ -d "/home/user/data/mariadb" ]; then \
+	echo "/data/mariadb already exists"; else \
+	mkdir /home/user/data/mariadb; \
 fi
 
 sudo apt-get update
